@@ -21,9 +21,9 @@ class ProductController extends Controller
     {
         try {
             $filters = $request->validated();
-            $books = $this->productService->list($filters);
+            $products = $this->productService->list($filters);
 
-            return $this->responseOk($books);
+            return $this->responseOk($products);
         } catch (Exception $e) {
             return $this->responseUnprocessableEntity($e->getMessage());
         }

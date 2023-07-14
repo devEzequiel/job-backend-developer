@@ -30,33 +30,6 @@ class ProductService
         return $this->productRepository->createProduct($data);
     }
 
-    /**
-     * @param int $id
-     * @return array
-     * @throws Exception
-     */
-    public function getBook(int $id): array
-    {
-        $product = $this->product::query()
-            ->where('id', $id)
-            ->with('category', 'type')
-            ->get()->map(fn($product) => [
-                'id' => $product->id,
-                'name' => $product->name,
-                'code' => $product->code,
-                'size' => $product->size . ' pages',
-                'created_at' => $product->created_at,
-                'category' => $product->category->name ?? null,
-                'type' => $product->type->description
-            ])->toArray();
-
-        if (!$product) {
-            throw new Exception('Livro não encontrado');
-        }
-
-        return $product;
-    }
-
     public function delete(int $id): bool
     {
         return $this->productRepository->deleteProduct($id);
