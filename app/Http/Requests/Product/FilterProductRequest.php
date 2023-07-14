@@ -25,9 +25,21 @@ class FilterProductRequest extends FormRequest
     {
         return [
             'search' => ['nullable', 'string'],
-            'category' => ['nullable', 'string', 'exists:products,category'],
+            'category' => ['nullable', 'string'],
             'with_image' => ['nullable', 'boolean'],
-            'product_id' => ['nullable', 'number', 'exists:products,id']
+            'product_id' => ['nullable', 'numeric']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'search.string' => 'O campo de pesquisa deve ser uma string.',
+            'category.string' => 'O campo de categoria deve ser uma string.',
+            'category.exists' => 'A categoria selecionada não existe.',
+            'with_image.boolean' => 'O campo com imagem deve ser um boolean.',
+            'product_id.numeric' => 'O ID do produto deve ser um número.',
+            'product_id.exists' => 'O ID do produto selecionado não existe.'
         ];
     }
 }

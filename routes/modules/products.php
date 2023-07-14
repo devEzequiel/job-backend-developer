@@ -10,5 +10,5 @@ Route::controller(\App\Http\Controllers\Api\Product\ProductController::class)
         Route::get('/{id}', 'show')->name('detail');
         Route::post('/', 'store')->name('create');
         Route::put('/{id}', 'update')->name('update');
-        Route::post('/{id}', 'destroy')->name('delete');
+        Route::delete('/{id}', 'destroy')->name('delete');
     });

@@ -16,16 +16,15 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     public function getProducts(array $filters)
     {
         $products = $this->query()
-//            ->filter($filters)
-            ->get()/*->map(fn($product) => [
+            ->filter($filters)
+            ->get()->map(fn($product) => [
                 'id' => $product->id,
                 'name' => $product->name,
-                'price' => $product->code,
+                'price' => $product->price,
                 'description' => $product->description,
                 'category' => $product->category,
-                'image_url' => $product->category->name ?? null
-            ])*/
-        ;
+                'image_url' => $product->image_url ?? null
+            ]);
 
         if (empty($products)) {
             throw new Exception('Nenhum produto encontrado');
@@ -48,6 +47,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
     public function deleteProduct(int $id)
     {
-        // TODO: Implement deleteProduct() method.
+        $product = $this->find($id);
+        return $product->delete();
     }
 }

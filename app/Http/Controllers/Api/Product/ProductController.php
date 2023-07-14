@@ -41,18 +41,7 @@ class ProductController extends Controller
         }
     }
 
-    public function show(int $id): JsonResponse
-    {
-        try {
-            $book = $this->productService->getBook($id);
-
-            return $this->responseOk($book);
-        } catch (Exception $e) {
-            return $this->responseNotFound($e->getMessage());
-        }
-    }
-
-    public function update(UpdateProductRequest $request, $id): JsonResponse
+    public function update(UpdateProductRequest $request, int $id): JsonResponse
     {
         $data = $request->validated();
 
@@ -61,7 +50,18 @@ class ProductController extends Controller
 
             return $this->responseOk($product, 'Produto atualizado com sucesso!');
         } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()], $e->getCode());
+            return $this->responseUnprocessableEntity($e->getMessage());
+        }
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        try {
+            $product = $this->productService->delete($id);
+
+            return $this->responseOk($product, 'Produto removido com sucesso!');
+        } catch (\Exception $e) {
+            return $this->responseUnprocessableEntity($e->getMessage());
         }
     }
 }
