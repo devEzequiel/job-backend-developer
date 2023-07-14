@@ -62,7 +62,7 @@ class ProductService
         return $this->productRepository->deleteProduct($id);
     }
 
-    public function update(array $data, int $id): bool
+    public function update(array $data, int $id)
     {
         return $this->productRepository->updateProduct($data, $id);
     }
