@@ -13,7 +13,6 @@ class ProductService
 
     /**
      * @param array $filters
-     * @return array
      * @throws Exception
      */
     public function list(array $filters)
