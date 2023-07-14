@@ -27,7 +27,7 @@ services:
             - laravel
 
     # db mysql
-    db:
+    adoorei_test_db:
         image: mysql:5.7.22
         restart: unless-stopped
         environment:
