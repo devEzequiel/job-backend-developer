@@ -21,9 +21,10 @@ class ImportProducts extends Command
     {
         if ($this->option('id')) {
             $this->storeOneProduct();
+        } else {
+            $this->storeProducts();
         }
 
-        $this->storeProducts();
         $this->info('Produtos importados com sucesso!');
     }
 
@@ -46,7 +47,7 @@ class ImportProducts extends Command
 
     private function storeOneProduct()
     {
-        $response = Http::get('https://fakestoreapi.com/products/'. $this->option('id'));
+        $response = Http::get('https://fakestoreapi.com/products/' . $this->option('id'));
         $product = $response->json();
         $product['name'] = $product['title'];
 
