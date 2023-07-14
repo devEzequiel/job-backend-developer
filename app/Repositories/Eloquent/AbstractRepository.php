@@ -21,6 +21,10 @@ abstract class AbstractRepository
         return $this->model->find($id);
     }
 
+    public function whereEquals($column, $value)
+    {
+        return $this->model->where($column, $value);
+    }
 
     public function all()
     {

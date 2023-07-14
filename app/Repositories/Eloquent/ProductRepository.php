@@ -50,4 +50,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         $product = $this->find($id);
         return $product->delete();
     }
+
+    public function checkName(string $name)
+    {
+        $product = $this->whereEquals('name', $name)->first();
+
+        return (bool)$product;
+    }
 }

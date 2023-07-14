@@ -8,4 +8,5 @@ interface ProductRepositoryInterface
     public function getProducts(array $filters);
     public function updateProduct (array $data, int $id);
     public function deleteProduct (int $id);
+    public function checkName(string $name);
 }
