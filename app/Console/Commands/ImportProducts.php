@@ -14,30 +14,46 @@ class ImportProducts extends Command
         parent::__construct();
     }
 
-    protected $signature = 'products:import';
+    protected $signature = 'products:import {--id= : ID of product}';
     protected $description = 'Import products from Fake Store Api and populate DB';
 
     public function handle()
     {
-        $response = Http::get('https://fakestoreapi.com/products');
-        $products = $response->json();
+        if ($this->option('id')) {
+            $this->storeOneProduct();
+        }
 
-        $this->storeProducts($products);
-
+        $this->storeProducts();
         $this->info('Produtos importados com sucesso!');
     }
 
-    private function storeProducts(array $products)
+    private function storeProducts()
     {
-        foreach ($products as $data) {
-            $data['name'] = $data['title'];
+        $response = Http::get('https://fakestoreapi.com/products');
+        $products = $response->json();
 
-            if ($this->productRepository->checkName($data['name'])) {
-                dump($data['name'] . ' já existe');
+        foreach ($products as $product) {
+            $product['name'] = $product['title'];
+
+            if ($this->productRepository->checkName($product['name'])) {
+                $this->info($product['name'] . ' já existe');
                 continue;
             }
 
-            $this->productRepository->createProduct($data);
+            $this->productRepository->createProduct($product);
         }
+    }
+
+    private function storeOneProduct()
+    {
+        $response = Http::get('https://fakestoreapi.com/products/'. $this->option('id'));
+        $product = $response->json();
+        $product['name'] = $product['title'];
+
+        if ($this->productRepository->checkName($product['name'])) {
+            dd($product['name'] . ' já existe');
+        }
+
+        $this->productRepository->createProduct($product);
     }
 }
